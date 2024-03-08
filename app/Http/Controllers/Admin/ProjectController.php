@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 // Models
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 //Form request
 use App\Http\Requests\StoreProjectRequest;
