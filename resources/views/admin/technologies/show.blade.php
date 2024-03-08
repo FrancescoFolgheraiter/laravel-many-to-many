@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', 'Progetto'.$type->name )
+@section('page-title', 'Progetto'.$technology->title )
 
 @section('main-content')
 
@@ -9,24 +9,21 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-success">
-                       {{ $type->name}}
+                       {{ $technology->title}}
                     </h1>
                     <hr>
-                    <div>
-                        @if (!($type->version==null))
-                            Versione: {{ $type->version }}
-                        @else 
-                            Versione: -
-                        @endif
-                    </div>
-                    <div>
-                        @if (!($type->description==null))
-                            {{ $type->description }}
-                        @else 
-                            Descrizione: -
-                        @endif
-                    </div>
-                    
+                    <h2 class="text-center">
+                        Tutti i progetti associati a questa tecnologia
+                    </h2>
+                    <ul>
+                        @foreach ($technology->projects as $project)
+                            <li>
+                                <a href="{{ route('admin.projects.show', ['project' => $project->id]) }}">
+                                    {{ $project->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
