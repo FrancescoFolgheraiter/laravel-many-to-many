@@ -9,7 +9,7 @@ class Technology extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'title',
         'slug'
     ];
     //Relationships

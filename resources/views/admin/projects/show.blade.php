@@ -25,7 +25,11 @@
                         <div>
                             <h5>Tipo di progetto</h5>
                             <h5>
-                                {{ $project->type->name }}
+                                @if (!($project->type==null))
+                                    {{ $project->type->name}}
+                                @else 
+                                -
+                                @endif
                             </h5>
                         </div>
                         <div>

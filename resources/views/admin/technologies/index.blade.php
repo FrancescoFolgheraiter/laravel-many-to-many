@@ -29,7 +29,7 @@
                                     <a href="{{ route('admin.technologies.show', ['technology' => $technology->slug]) }}" class="btn btn-xs btn-primary me-2">
                                         Vedi
                                     </a>
-                                    <a href="{{ route('admin.technologies.edit', ['technology' => $technology->id]) }}" class="btn btn-warning me-2">
+                                    <a href="{{ route('admin.technologies.edit', ['technology' => $technology->slug]) }}" class="btn btn-warning me-2">
                                         Modifica
                                     </a>
                                     <form onsubmit="return confirm('Sei sicuro di voler eliminare questa voce?');"  action="{{ route('admin.technologies.destroy', ['technology' => $technology->id]) }}" method="POST">

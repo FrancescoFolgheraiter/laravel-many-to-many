@@ -28,7 +28,7 @@ class StoreProjectRequest extends FormRequest
             'name' => 'required|max:255',
             'thumb' => 'nullable|url',
             'description' => 'nullable|max:5000',
-            'type_id' => 'required|exists:types,id',
+            'type_id' => 'nullable|exists:types,id',
             'start_date' => 'required|date',
             'last_update_date' => 'nullable|date',
             'total_hours' => 'nullable|numeric|max:999',
