@@ -49,8 +49,15 @@ class ProjectController extends Controller
     
         $slug = Str::slug($projectData['name']);
         $projectData['slug']=$slug;
-        $project = Project::create($projectData);
 
+        
+        $project = Project::create($projectData);
+        if (isset($projectData['technologies'])) {
+            foreach ($projectData['technologies'] as $singleTechnologyId) {
+      
+                $project->technologies()->attach($singleTechnologyId);
+            }
+        }
         return redirect()->route('admin.projects.index');
     }
 

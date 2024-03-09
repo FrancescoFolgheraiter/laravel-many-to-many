@@ -17,7 +17,7 @@ class Project extends Model
         'type_id',
         'start_date',
         'last_update_date',
-        'total_hours'
+        'total_hours',
     ];
     //Relationships
     public function type()

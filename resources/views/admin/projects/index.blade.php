@@ -43,7 +43,7 @@
                                 </td>
                                 <td>
                                     @forelse ($project->technologies as $technology)
-                                        <a href="{{ route('admin.technologies.show', ['technology' => $technology->id]) }}" class="badge rounded-pill text-bg-primary">
+                                        <a href="{{ route('admin.technologies.show', ['technology' => $technology->slug]) }}" class="badge rounded-pill text-bg-primary">
                                             {{ $technology->title }}
                                         </a>
                                     @empty
