@@ -52,6 +52,7 @@ class ProjectController extends Controller
 
         
         $project = Project::create($projectData);
+        //aggiungo la relazione sulla tabella pivot
         if (isset($projectData['technologies'])) {
             foreach ($projectData['technologies'] as $singleTechnologyId) {
       
@@ -91,6 +92,13 @@ class ProjectController extends Controller
     {
         $projectData = $request->validated();
         $project->update($projectData);
+        //modifico i dati nella tabella pivot
+        if (isset($projectData['technologies'])) {
+            $project->technologies()->sync($projectData['technologies']);
+        }
+        else {
+            $project->technologies()->detach();
+        }
         return redirect()->route('admin.projects.show', ['project' => $project->slug]);
     }
 

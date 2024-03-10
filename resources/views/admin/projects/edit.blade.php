@@ -53,6 +53,11 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('type_id')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div> 
                         <div class="mb-3">
                            <label for="start_date" class="form-label">Data inizio progetto <span class="text-danger">*</span></label>
@@ -103,7 +108,12 @@
                                             value="{{ $technology->id }}">
                                         <label class="form-check-label" for="technology-{{ $technology->id }}">{{ $technology->title }}</label>
                                     </div>
-                                @endforeach
+                                    @endforeach
+                                    @error('technologies')
+                                        <div class="alert alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                             </div>
                         </div>
                         <div>
