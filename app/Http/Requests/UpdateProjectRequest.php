@@ -32,7 +32,8 @@ class UpdateProjectRequest extends FormRequest
             'start_date' => 'required|date',
             'last_update_date' => 'nullable|date',
             'total_hours' => 'nullable|numeric|max:999',
-            'technologies'=>'nullable|array|exists:technologies,id'
+            'technologies'=>'nullable|array|exists:technologies,id',
+            'delete_img' => 'nullable|boolean'
         ];
     }
 

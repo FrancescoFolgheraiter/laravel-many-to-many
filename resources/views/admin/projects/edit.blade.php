@@ -11,7 +11,7 @@
                         Modifica progetto: {{ $project->name }}
                     </h1>
                     <br>
-                    <form action="{{ route('admin.projects.update', ['project' => $project->id]) }}" method="POST">
+                    <form action="{{ route('admin.projects.update', ['project' => $project->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
@@ -33,13 +33,28 @@
                            @enderror
                         </div>
                         <div class="mb-3">
-                           <label for="thumb" class="form-label">Thumb</label>
-                           <input type="text" class="form-control" id="thumb" name="thumb" placeholder="Inserisci l'url dell'immagine..." value="{{ $project->thumb}}">
-                           @error('thumb')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
+                            <label for="thumb" class="form-label">Carica l'immagine del progetto</label>
+                            <input class="form-control" type="file" id="thumb" name="thumb">
+                            {{-- controllo se devo visualizzare l'immagine nel caso sia valorizzato project->thumb --}}
+                            @if ($project->thumb != null)
+                                <div class="mt-2">
+                                    <h4>
+                                        immagine progetto attuale:
+                                    </h4>
+                                    <img src="/storage/{{ $project->thumb }}" style="max-width: 400px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="1" id="delete_img" name="delete_img">
+                                        <label class="form-check-label" for="delete_img">
+                                            Rimuovi immagine
+                                        </label>
+                                    </div>
                                 </div>
-                           @enderror
+                            @endif
+                            @error('thumb')
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="type_id" class="form-label">Tipo di progetto</label>

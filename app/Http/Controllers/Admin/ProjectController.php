@@ -50,14 +50,16 @@ class ProjectController extends Controller
     
         $slug = Str::slug($projectData['name']);
         $projectData['slug']=$slug;
-        
+
+        //gestione inserimento immagini
         $imgPath = null;
         if (isset($projectData['thumb'])) {
             $imgPath = Storage::disk('public')->put('images', $projectData['thumb']);
         }
         //una volta aggiunta l'immagine alla cartella storage sostituisco il valore $projectData['thumb'] con il percorso
         $projectData['thumb'] = $imgPath;
-        
+        //fine gestione immagini
+
         $project = Project::create($projectData);
         //aggiungo la relazione sulla tabella pivot
         if (isset($projectData['technologies'])) {
@@ -98,6 +100,28 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $projectData = $request->validated();
+        //gestione modifica dell'immagine
+        //setto una variabile di supporto con il percorso che ho salvato nel db
+        $imgPath = $project->thumb;
+        if (isset($projectData['thumb'])) {
+            //entro in questa condizione se l'utente ha valorizzato il form thumb
+            if ($project->thumb != null) {
+                //entro qui per eliminare l'immagine nello storage perchè era valorizzata la colonna 
+                //thumb con un percorso ciò significa che devo eliminare il vecchio dato
+                Storage::disk('public')->delete($project->thumb);
+            }
+            //aggiungo l'immmagine all'interno dello storage nella cartella images
+            $imgPath = Storage::disk('public')->put('images', $projectData['thumb']);
+        }
+        else if (isset($projectData['delete_img'])) {
+            //se dall'input utente mi arriva la check di eliminare l'immagine del progetto la elimino dallo storage
+            Storage::disk('public')->delete($project->thumb);
+            //setto il path a null
+            $imgPath = null;
+        }
+        $projectData['thumb'] = $imgPath;
+        //fine gestione modifica dell'immagine
+        
         $project->update($projectData);
         //modifico i dati nella tabella pivot
         if (isset($projectData['technologies'])) {
@@ -114,6 +138,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        //controllo se la thumb è settata in caso elimino l'immagine in storage
+        if ($project->thumb != null) {
+            Storage::disk('public')->delete($project->thumb);
+        }
+
         $project->delete();
 
         return redirect()->route('admin.projects.index');
