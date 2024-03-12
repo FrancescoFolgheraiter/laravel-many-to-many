@@ -11,7 +11,7 @@
                         Aggiungi progetto
                     </h1>
                     <br>
-                    <form action="{{ route('admin.projects.store') }}" method="POST">
+                    <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                            <label for="name" class="form-label">Nome del progetto <span class="text-danger">*</span></label>
@@ -23,22 +23,23 @@
                            @enderror
                         </div>
                         <div class="mb-3">
-                           <label for="description" class="form-label">Descrizione</label>
-                           <textarea class="form-control" id="description" name="description" rows="3" placeholder="Inserisci la descrizione...">{{ old('description') }}</textarea>
-                           @error('description')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                           @enderror
+                            <label for="description" class="form-label">Descrizione</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Inserisci la descrizione...">{{ old('description') }}</textarea>
+                            @error('description')
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
-                           <label for="thumb" class="form-label">Thumb</label>
-                           <input type="text" class="form-control" id="thumb" name="thumb" placeholder="Inserisci l'url dell'immagine..." value="{{ old('thumb') }}">
-                           @error('thumb')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                           @enderror
+                            <label for="thumb" class="form-label">Carica l'immagine del progetto</label>
+                            <input class="form-control" type="file" id="thumb" name="thumb">
+                            {{-- gestione errore --}}
+                            @error('thumb')
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="type_id" class="form-label">Tipo di progetto<span class="text-danger">*</span></label>

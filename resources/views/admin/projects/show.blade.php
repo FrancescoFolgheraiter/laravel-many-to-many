@@ -15,10 +15,10 @@
                         Progetto: {{ $project->name}}
                     </h1>
                     <hr>
-                    @if ($project->thumb==null)
-                        Non ci sono immagini
-                    @else
-                        <img src="{{ $project->thumb }}" alt="{{ $project->name}}">
+                    @if ($project->thumb != null)
+                        <div class="my-3">
+                            <img src="{{ asset('storage/'.$project->thumb) }}" style="max-width: 400px;">
+                        </div>
                     @endif
                     <p class="card-text">{{ $project->description}}</p>
                     <div class="d-flex justify-content-between ">

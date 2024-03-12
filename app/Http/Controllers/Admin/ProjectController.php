@@ -17,6 +17,7 @@ use App\Http\Requests\UpdateProjectRequest;
 
 // Helpers per slug
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 class ProjectController extends Controller
 {
     /**
@@ -49,7 +50,13 @@ class ProjectController extends Controller
     
         $slug = Str::slug($projectData['name']);
         $projectData['slug']=$slug;
-
+        
+        $imgPath = null;
+        if (isset($projectData['thumb'])) {
+            $imgPath = Storage::disk('public')->put('images', $projectData['thumb']);
+        }
+        //una volta aggiunta l'immagine alla cartella storage sostituisco il valore $projectData['thumb'] con il percorso
+        $projectData['thumb'] = $imgPath;
         
         $project = Project::create($projectData);
         //aggiungo la relazione sulla tabella pivot
